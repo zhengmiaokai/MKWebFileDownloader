@@ -28,7 +28,7 @@
     
     /* https://dldir1.qq.com/qqfile/QQforMac/QQ_V6.5.0.dmg
      * https://dldir1.qq.com/weixin/mac/WeChat_2.3.17.18.dmg */
-    [[MKWebFileDownloader sharedInstance] downloadWithURLString:_textField.text supportResume:NO directory:nil queuePriority:NSOperationQueuePriorityNormal progressHandler:^(NSInteger receivedSize, NSInteger expectedSize) {
+    [[MKWebFileDownloader sharedInstance] downloadWithURLString:_textField.text supportResume:YES directory:nil queuePriority:NSOperationQueuePriorityNormal progressHandler:^(NSInteger receivedSize, NSInteger expectedSize) {
         NSString *statusInfo = [NSString stringWithFormat:@"下载进度：%d%@", (int)(1.0*receivedSize/expectedSize * 100), @"%"];
         self.statusLab.text = statusInfo;
     } completionHandler:^(NSString *filePath, NSData *fileData, NSError *error) {
