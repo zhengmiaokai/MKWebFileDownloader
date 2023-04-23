@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bFH-cj-ukk">
+                                <rect key="frame" x="146" y="503" width="123" height="71"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="71" id="ULb-HS-fxK"/>
+                                    <constraint firstAttribute="width" constant="123" id="bd5-NL-GyH"/>
+                                </constraints>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="文件下载">
+                                    <fontDescription key="titleFontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="24"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="download:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nq9-2J-esS"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="下载进度" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgR-TX-v4P">
+                                <rect key="frame" x="82" y="368" width="251" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="9f8-0a-gzC"/>
+                                    <constraint firstAttribute="width" constant="251" id="YI2-Bp-SwE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" systemColor="systemBlueColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://dldir1.qq.com/qqfile/QQforMac/QQ_V6.5.0.dmg" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eSN-XG-h8A">
+                                <rect key="frame" x="19" y="431" width="377" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="guh-ZD-zxu"/>
+                                    <constraint firstAttribute="width" constant="377" id="xxr-YI-K11"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="bFH-cj-ukk" firstAttribute="top" secondItem="eSN-XG-h8A" secondAttribute="bottom" constant="38" id="3EM-jG-U17"/>
+                            <constraint firstItem="eSN-XG-h8A" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="42u-YI-pN6"/>
+                            <constraint firstItem="eSN-XG-h8A" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="19" id="6bY-5q-fhz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="YgR-TX-v4P" secondAttribute="trailing" constant="81" id="Epk-gj-Nln"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eSN-XG-h8A" secondAttribute="trailing" constant="18" id="F8E-GB-oaI"/>
+                            <constraint firstItem="YgR-TX-v4P" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="82" id="OxK-bL-gOR"/>
+                            <constraint firstItem="bFH-cj-ukk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="146" id="Y0I-PV-y4p"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bFH-cj-ukk" secondAttribute="trailing" constant="145" id="YNI-bd-OtE"/>
+                            <constraint firstItem="eSN-XG-h8A" firstAttribute="top" secondItem="YgR-TX-v4P" secondAttribute="bottom" constant="39" id="dKP-dD-dR6"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="downloadBtn" destination="bFH-cj-ukk" id="zwn-Ag-RWe"/>
+                        <outlet property="statusLab" destination="YgR-TX-v4P" id="cwD-Pe-Pe4"/>
+                        <outlet property="textField" destination="eSN-XG-h8A" id="x6E-Oi-nCA"/>
+                        <outlet property="view" destination="8bC-Xf-vdC" id="NS6-8m-HBv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="115.84821428571428"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

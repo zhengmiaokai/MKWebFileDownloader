@@ -1,0 +1,443 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		032D4C7629F5011600D1E209 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C7529F5011600D1E209 /* AppDelegate.m */; };
+		032D4C7929F5011600D1E209 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C7829F5011600D1E209 /* SceneDelegate.m */; };
+		032D4C7C29F5011600D1E209 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C7B29F5011600D1E209 /* ViewController.m */; };
+		032D4C7F29F5011600D1E209 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 032D4C7D29F5011600D1E209 /* Main.storyboard */; };
+		032D4C8129F5011800D1E209 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 032D4C8029F5011800D1E209 /* Assets.xcassets */; };
+		032D4C8429F5011800D1E209 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 032D4C8229F5011800D1E209 /* LaunchScreen.storyboard */; };
+		032D4C8729F5011800D1E209 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C8629F5011800D1E209 /* main.m */; };
+		032D4C9229F501A900D1E209 /* MKWebFileDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C8E29F501A900D1E209 /* MKWebFileDownloader.m */; };
+		032D4C9329F501A900D1E209 /* MKWebFileDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C8F29F501A900D1E209 /* MKWebFileDownloadOperation.m */; };
+		032D4C9629F5031D00D1E209 /* NSFileManager+FileDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C9529F5031D00D1E209 /* NSFileManager+FileDownload.m */; };
+		DCE49A3324C748DF8F715B74 /* libPods-Downloader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA0BC91F2C661E93347D71E /* libPods-Downloader.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		032D4C7129F5011600D1E209 /* Downloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Downloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		032D4C7429F5011600D1E209 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		032D4C7529F5011600D1E209 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		032D4C7729F5011600D1E209 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		032D4C7829F5011600D1E209 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		032D4C7A29F5011600D1E209 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		032D4C7B29F5011600D1E209 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		032D4C7E29F5011600D1E209 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		032D4C8029F5011800D1E209 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		032D4C8329F5011800D1E209 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		032D4C8529F5011800D1E209 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		032D4C8629F5011800D1E209 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		032D4C8E29F501A900D1E209 /* MKWebFileDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWebFileDownloader.m; sourceTree = "<group>"; };
+		032D4C8F29F501A900D1E209 /* MKWebFileDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWebFileDownloadOperation.m; sourceTree = "<group>"; };
+		032D4C9029F501A900D1E209 /* MKWebFileDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWebFileDownloader.h; sourceTree = "<group>"; };
+		032D4C9129F501A900D1E209 /* MKWebFileDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWebFileDownloadOperation.h; sourceTree = "<group>"; };
+		032D4C9429F5031D00D1E209 /* NSFileManager+FileDownload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+FileDownload.h"; sourceTree = "<group>"; };
+		032D4C9529F5031D00D1E209 /* NSFileManager+FileDownload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+FileDownload.m"; sourceTree = "<group>"; };
+		51AB091B15A1E7866FEFA521 /* Pods-Downloader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Downloader.debug.xcconfig"; path = "Target Support Files/Pods-Downloader/Pods-Downloader.debug.xcconfig"; sourceTree = "<group>"; };
+		F6A816D15779E2050F8C31D2 /* Pods-Downloader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Downloader.release.xcconfig"; path = "Target Support Files/Pods-Downloader/Pods-Downloader.release.xcconfig"; sourceTree = "<group>"; };
+		FDA0BC91F2C661E93347D71E /* libPods-Downloader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Downloader.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		032D4C6E29F5011600D1E209 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCE49A3324C748DF8F715B74 /* libPods-Downloader.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		032D4C6829F5011600D1E209 = {
+			isa = PBXGroup;
+			children = (
+				032D4C7329F5011600D1E209 /* Downloader */,
+				032D4C7229F5011600D1E209 /* Products */,
+				148F3599C95658907E578D9A /* Pods */,
+				4B6E1D91531C632C3BFD5791 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		032D4C7229F5011600D1E209 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				032D4C7129F5011600D1E209 /* Downloader.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		032D4C7329F5011600D1E209 /* Downloader */ = {
+			isa = PBXGroup;
+			children = (
+				032D4C7429F5011600D1E209 /* AppDelegate.h */,
+				032D4C7529F5011600D1E209 /* AppDelegate.m */,
+				032D4C7729F5011600D1E209 /* SceneDelegate.h */,
+				032D4C7829F5011600D1E209 /* SceneDelegate.m */,
+				032D4C7A29F5011600D1E209 /* ViewController.h */,
+				032D4C7B29F5011600D1E209 /* ViewController.m */,
+				032D4C8D29F501A900D1E209 /* MKWebFileDownloader */,
+				032D4C7D29F5011600D1E209 /* Main.storyboard */,
+				032D4C8029F5011800D1E209 /* Assets.xcassets */,
+				032D4C8229F5011800D1E209 /* LaunchScreen.storyboard */,
+				032D4C8529F5011800D1E209 /* Info.plist */,
+				032D4C8629F5011800D1E209 /* main.m */,
+			);
+			path = Downloader;
+			sourceTree = "<group>";
+		};
+		032D4C8D29F501A900D1E209 /* MKWebFileDownloader */ = {
+			isa = PBXGroup;
+			children = (
+				032D4C9029F501A900D1E209 /* MKWebFileDownloader.h */,
+				032D4C8E29F501A900D1E209 /* MKWebFileDownloader.m */,
+				032D4C9129F501A900D1E209 /* MKWebFileDownloadOperation.h */,
+				032D4C8F29F501A900D1E209 /* MKWebFileDownloadOperation.m */,
+				032D4C9429F5031D00D1E209 /* NSFileManager+FileDownload.h */,
+				032D4C9529F5031D00D1E209 /* NSFileManager+FileDownload.m */,
+			);
+			name = MKWebFileDownloader;
+			path = ../../MKWebFileDownloader;
+			sourceTree = "<group>";
+		};
+		148F3599C95658907E578D9A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				51AB091B15A1E7866FEFA521 /* Pods-Downloader.debug.xcconfig */,
+				F6A816D15779E2050F8C31D2 /* Pods-Downloader.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		4B6E1D91531C632C3BFD5791 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FDA0BC91F2C661E93347D71E /* libPods-Downloader.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		032D4C7029F5011600D1E209 /* Downloader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 032D4C8A29F5011800D1E209 /* Build configuration list for PBXNativeTarget "Downloader" */;
+			buildPhases = (
+				AEA296B6AC7FE4772F56C79C /* [CP] Check Pods Manifest.lock */,
+				032D4C6D29F5011600D1E209 /* Sources */,
+				032D4C6E29F5011600D1E209 /* Frameworks */,
+				032D4C6F29F5011600D1E209 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Downloader;
+			productName = Downloader;
+			productReference = 032D4C7129F5011600D1E209 /* Downloader.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		032D4C6929F5011600D1E209 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					032D4C7029F5011600D1E209 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 032D4C6C29F5011600D1E209 /* Build configuration list for PBXProject "Downloader" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 032D4C6829F5011600D1E209;
+			productRefGroup = 032D4C7229F5011600D1E209 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				032D4C7029F5011600D1E209 /* Downloader */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		032D4C6F29F5011600D1E209 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				032D4C8429F5011800D1E209 /* LaunchScreen.storyboard in Resources */,
+				032D4C8129F5011800D1E209 /* Assets.xcassets in Resources */,
+				032D4C7F29F5011600D1E209 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AEA296B6AC7FE4772F56C79C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Downloader-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		032D4C6D29F5011600D1E209 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				032D4C9329F501A900D1E209 /* MKWebFileDownloadOperation.m in Sources */,
+				032D4C7C29F5011600D1E209 /* ViewController.m in Sources */,
+				032D4C7629F5011600D1E209 /* AppDelegate.m in Sources */,
+				032D4C9229F501A900D1E209 /* MKWebFileDownloader.m in Sources */,
+				032D4C8729F5011800D1E209 /* main.m in Sources */,
+				032D4C9629F5031D00D1E209 /* NSFileManager+FileDownload.m in Sources */,
+				032D4C7929F5011600D1E209 /* SceneDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		032D4C7D29F5011600D1E209 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				032D4C7E29F5011600D1E209 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		032D4C8229F5011800D1E209 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				032D4C8329F5011800D1E209 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		032D4C8829F5011800D1E209 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		032D4C8929F5011800D1E209 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		032D4C8B29F5011800D1E209 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 51AB091B15A1E7866FEFA521 /* Pods-Downloader.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Downloader/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.base.test.Downloader;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		032D4C8C29F5011800D1E209 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F6A816D15779E2050F8C31D2 /* Pods-Downloader.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Downloader/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.base.test.Downloader;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		032D4C6C29F5011600D1E209 /* Build configuration list for PBXProject "Downloader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				032D4C8829F5011800D1E209 /* Debug */,
+				032D4C8929F5011800D1E209 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		032D4C8A29F5011800D1E209 /* Build configuration list for PBXNativeTarget "Downloader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				032D4C8B29F5011800D1E209 /* Debug */,
+				032D4C8C29F5011800D1E209 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 032D4C6929F5011600D1E209 /* Project object */;
+}
