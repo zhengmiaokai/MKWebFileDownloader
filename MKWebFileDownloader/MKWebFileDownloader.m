@@ -116,10 +116,9 @@
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     MKWebFileDownloadOperation *downloadOperation = [self operationWithTask:task];
     if (downloadOperation) {
-        __weak typeof(self) weakSelf = self;
         [MKDownloadUitls performOnMainThread:^{
             [downloadOperation URLSession:session task:task didCompleteWithError:error];
-        } available:weakSelf.delegateOnMainThread];
+        } available:_delegateOnMainThread];
         
     } else {
         // 无效操作
@@ -130,10 +129,9 @@
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     MKWebFileDownloadOperation *downloadOperation = [self operationWithTask:dataTask];
     if (downloadOperation) {
-        __weak typeof(self) weakSelf = self;
         [MKDownloadUitls performOnMainThread:^{
             [downloadOperation URLSession:session dataTask:dataTask didReceiveData:data];
-        } available:weakSelf.delegateOnMainThread];
+        } available:_delegateOnMainThread];
     } else {
         // 无效操作
     }
@@ -142,10 +140,9 @@
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
     MKWebFileDownloadOperation *downloadOperation = [self operationWithTask:dataTask];
     if (downloadOperation) {
-        __weak typeof(self) weakSelf = self;
         [MKDownloadUitls performOnMainThread:^{
             [downloadOperation URLSession:session dataTask:dataTask didReceiveResponse:response completionHandler:completionHandler];
-        } available:weakSelf.delegateOnMainThread];
+        } available:_delegateOnMainThread];
     } else {
         // 无效操作
     }
