@@ -11,7 +11,6 @@
 @interface MKWebFileDownloadOperation ()
 
 @property (nonatomic, strong) NSURLSession *downloadSession;
-@property (nonatomic, strong) NSURLSessionDataTask *dataTask;
 
 @property (nonatomic, copy) NSURL *downloadURL;
 
@@ -24,12 +23,19 @@
 
 @implementation MKWebFileDownloadOperation
 
+@synthesize executing = _executing;
+@synthesize finished = _finished;
+
 - (instancetype)initWithDownloadSession:(NSURLSession *)downloadSession {
     self = [super init];
     if (self) {
         self.downloadSession = downloadSession;
     }
     return self;
+}
+
+- (void)dealloc {
+    // 释放下载任务
 }
 
 - (NSURLSessionDataTask *)dataTaskWithURL:(NSURL *)URL {
@@ -45,7 +51,7 @@
     }
    
     NSURLSessionDataTask *dataTask = [_downloadSession dataTaskWithRequest:request];
-    self.dataTask = dataTask;
+    _dataTask = dataTask;
     
     return dataTask;;
 }
@@ -58,6 +64,23 @@
     [_dataTask cancel];
 }
 
+- (void)setFinished:(BOOL)finished {
+    [self willChangeValueForKey:@"isFinished"];
+    _finished = finished;
+    [self didChangeValueForKey:@"isFinished"];
+}
+
+- (void)setExecuting:(BOOL)executing {
+    [self willChangeValueForKey:@"isExecuting"];
+    _executing = executing;
+    [self didChangeValueForKey:@"isExecuting"];
+}
+
+- (void)done {
+    self.finished = YES;
+    self.executing = NO;
+}
+
 #pragma mark - NSURLSessionDelegate -
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     if (error) {
@@ -67,6 +90,7 @@
     } else {
         if (_supportResume) {
             [self.writeHandle closeFile];
+            self.writeHandle = nil;
             
             // 移动文件时，如果文件已存在会报错
             NSError *fileError = nil;
@@ -106,6 +130,7 @@
             }
         }
     }
+    [self done];
 }
 
 #pragma mark - NSURLSessionDataTaskDelegate -
