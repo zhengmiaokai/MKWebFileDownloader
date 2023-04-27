@@ -6,7 +6,6 @@
 //
 
 #import "MKWebFileDownloader.h"
-#import <YYKit/YYThreadSafeDictionary.h>
 #import <YYKit/NSString+YYAdd.h>
 #import "MKWebFileDownloadOperation.h"
 #import "NSFileManager+FileDownload.h"
@@ -14,11 +13,11 @@
 @interface MKWebFileDownloader () <NSURLSessionDataDelegate> {
     NSString *_defaultDirectory;
 }
+
+/// 下载队列
 @property (nonatomic, strong) NSOperationQueue *downloadQueue;
 
 @property (nonatomic, strong) NSURLSession *downloadSession;
-
-@property (nonatomic, strong) YYThreadSafeDictionary *downloadOperations;
 
 @end
 
@@ -41,8 +40,6 @@
         _downloadQueue.name = @"com.Base.MKWebFileDownloader";
         
         self.downloadSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
-        
-        self.downloadOperations = [[YYThreadSafeDictionary alloc] init];
         
         NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         _defaultDirectory = [cachesPath stringByAppendingPathComponent:NSStringFromClass([self class])];
@@ -108,23 +105,22 @@
         downloadOperation.tmpFilePath = [NSString stringWithFormat:@"%@/%@", directory, URL.absoluteString.md5String];
         downloadOperation.progressHandler = progressHandler;
         downloadOperation.completionHandler = completionHandler;
-        
-        NSURLSessionDataTask *task = [downloadOperation dataTaskWithURL:URL];
-        [_downloadOperations setObject:downloadOperation forKey:@(task.taskIdentifier)];
-        
+        [downloadOperation dataTaskWithURL:URL];
         [self.downloadQueue addOperation:downloadOperation];
-        return task;
+        
+        return downloadOperation.dataTask;
     }
 }
 
 #pragma mark - NSURLSessionTaskDelegate -
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    MKWebFileDownloadOperation *downloadOperation = [_downloadOperations objectForKey:@(task.taskIdentifier)];
+    MKWebFileDownloadOperation *downloadOperation = [self operationWithTask:task];
     if (downloadOperation) {
+        __weak typeof(self) weakSelf = self;
         [MKDownloadUitls performOnMainThread:^{
             [downloadOperation URLSession:session task:task didCompleteWithError:error];
-        } available:_delegateOnMainThread];
-        [_downloadOperations removeObjectForKey:@(task.taskIdentifier)];
+        } available:weakSelf.delegateOnMainThread];
+        
     } else {
         // 无效操作
     }
@@ -132,25 +128,45 @@
 
 #pragma mark - NSURLSessionDataTaskDelegate -
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    MKWebFileDownloadOperation *downloadOperation = [_downloadOperations objectForKey:@(dataTask.taskIdentifier)];
+    MKWebFileDownloadOperation *downloadOperation = [self operationWithTask:dataTask];
     if (downloadOperation) {
+        __weak typeof(self) weakSelf = self;
         [MKDownloadUitls performOnMainThread:^{
             [downloadOperation URLSession:session dataTask:dataTask didReceiveData:data];
-        } available:_delegateOnMainThread];
+        } available:weakSelf.delegateOnMainThread];
     } else {
         // 无效操作
     }
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
-    MKWebFileDownloadOperation *downloadOperation = [_downloadOperations objectForKey:@(dataTask.taskIdentifier)];
+    MKWebFileDownloadOperation *downloadOperation = [self operationWithTask:dataTask];
     if (downloadOperation) {
+        __weak typeof(self) weakSelf = self;
         [MKDownloadUitls performOnMainThread:^{
             [downloadOperation URLSession:session dataTask:dataTask didReceiveResponse:response completionHandler:completionHandler];
-        } available:_delegateOnMainThread];
+        } available:weakSelf.delegateOnMainThread];
     } else {
         // 无效操作
     }
+}
+
+#pragma mark - Getter -
+- (MKWebFileDownloadOperation *)operationWithTask:(NSURLSessionTask *)task {
+    MKWebFileDownloadOperation *resultOperation = nil;
+    for (MKWebFileDownloadOperation *operation in _downloadQueue.operations) {
+        if ([operation respondsToSelector:@selector(dataTask)]) {
+            NSURLSessionTask *dataTask;
+            @synchronized (operation) {
+                dataTask = operation.dataTask;
+            }
+            if (dataTask.taskIdentifier == task.taskIdentifier) {
+                resultOperation = operation;
+                break;
+            }
+        }
+    }
+    return resultOperation;
 }
 
 @end
