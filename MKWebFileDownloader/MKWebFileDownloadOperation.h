@@ -9,6 +9,9 @@
 
 @interface MKWebFileDownloadOperation : NSOperation <NSURLSessionDataDelegate>
 
+@property (nonatomic, strong, readonly) NSURLSessionDataTask *dataTask;
+
+// 文件存储路劲
 @property (nonatomic, copy) NSString *downloadFilePath;
 
 /// 是否支持断点续传
