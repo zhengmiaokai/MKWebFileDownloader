@@ -16,7 +16,7 @@
 		032D4C8729F5011800D1E209 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C8629F5011800D1E209 /* main.m */; };
 		032D4C9229F501A900D1E209 /* MKWebFileDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C8E29F501A900D1E209 /* MKWebFileDownloader.m */; };
 		032D4C9329F501A900D1E209 /* MKWebFileDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C8F29F501A900D1E209 /* MKWebFileDownloadOperation.m */; };
-		032D4C9629F5031D00D1E209 /* NSFileManager+FileDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C9529F5031D00D1E209 /* NSFileManager+FileDownload.m */; };
+		032D4C9629F5031D00D1E209 /* MKDownloadUitls.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C9529F5031D00D1E209 /* MKDownloadUitls.m */; };
 		DCE49A3324C748DF8F715B74 /* libPods-Downloader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA0BC91F2C661E93347D71E /* libPods-Downloader.a */; };
 /* End PBXBuildFile section */
 
@@ -37,8 +37,8 @@
 		032D4C8F29F501A900D1E209 /* MKWebFileDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWebFileDownloadOperation.m; sourceTree = "<group>"; };
 		032D4C9029F501A900D1E209 /* MKWebFileDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWebFileDownloader.h; sourceTree = "<group>"; };
 		032D4C9129F501A900D1E209 /* MKWebFileDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWebFileDownloadOperation.h; sourceTree = "<group>"; };
-		032D4C9429F5031D00D1E209 /* NSFileManager+FileDownload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+FileDownload.h"; sourceTree = "<group>"; };
-		032D4C9529F5031D00D1E209 /* NSFileManager+FileDownload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+FileDownload.m"; sourceTree = "<group>"; };
+		032D4C9429F5031D00D1E209 /* MKDownloadUitls.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKDownloadUitls.h; sourceTree = "<group>"; };
+		032D4C9529F5031D00D1E209 /* MKDownloadUitls.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKDownloadUitls.m; sourceTree = "<group>"; };
 		51AB091B15A1E7866FEFA521 /* Pods-Downloader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Downloader.debug.xcconfig"; path = "Target Support Files/Pods-Downloader/Pods-Downloader.debug.xcconfig"; sourceTree = "<group>"; };
 		F6A816D15779E2050F8C31D2 /* Pods-Downloader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Downloader.release.xcconfig"; path = "Target Support Files/Pods-Downloader/Pods-Downloader.release.xcconfig"; sourceTree = "<group>"; };
 		FDA0BC91F2C661E93347D71E /* libPods-Downloader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Downloader.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,8 +100,8 @@
 				032D4C8E29F501A900D1E209 /* MKWebFileDownloader.m */,
 				032D4C9129F501A900D1E209 /* MKWebFileDownloadOperation.h */,
 				032D4C8F29F501A900D1E209 /* MKWebFileDownloadOperation.m */,
-				032D4C9429F5031D00D1E209 /* NSFileManager+FileDownload.h */,
-				032D4C9529F5031D00D1E209 /* NSFileManager+FileDownload.m */,
+				032D4C9429F5031D00D1E209 /* MKDownloadUitls.h */,
+				032D4C9529F5031D00D1E209 /* MKDownloadUitls.m */,
 			);
 			name = MKWebFileDownloader;
 			path = ../../MKWebFileDownloader;
@@ -225,7 +225,7 @@
 				032D4C7629F5011600D1E209 /* AppDelegate.m in Sources */,
 				032D4C9229F501A900D1E209 /* MKWebFileDownloader.m in Sources */,
 				032D4C8729F5011800D1E209 /* main.m in Sources */,
-				032D4C9629F5031D00D1E209 /* NSFileManager+FileDownload.m in Sources */,
+				032D4C9629F5031D00D1E209 /* MKDownloadUitls.m in Sources */,
 				032D4C7929F5011600D1E209 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,6 +377,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -404,6 +405,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

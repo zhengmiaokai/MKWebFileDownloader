@@ -6,9 +6,8 @@
 //
 
 #import "MKWebFileDownloader.h"
-#import <YYKit/NSString+YYAdd.h>
+#import "MKDownloadUitls.h"
 #import "MKWebFileDownloadOperation.h"
-#import "NSFileManager+FileDownload.h"
 
 @interface MKWebFileDownloader () <NSURLSessionDataDelegate> {
     NSString *_defaultDirectory;
@@ -87,7 +86,7 @@
     }
     
     NSURL* URL = [NSURL URLWithString:URLString];
-    NSString *fileName = [NSString stringWithFormat:@"%@.%@", URL.absoluteString.md5String, URL.pathExtension];
+    NSString *fileName = [NSString stringWithFormat:@"%@.%@", [MKDownloadUitls MD5WithString:URL.absoluteString], URL.pathExtension];
     NSString *filePath = [NSString stringWithFormat:@"%@/%@", directory, fileName];
     
     if ([NSFileManager isExistsAtPath:filePath]) {
@@ -100,9 +99,10 @@
     } else {
         MKWebFileDownloadOperation *downloadOperation = [[MKWebFileDownloadOperation alloc] initWithDownloadSession:_downloadSession];
         downloadOperation.supportResume = supportResume;
+        downloadOperation.delegateOnMainThread = _delegateOnMainThread;
         downloadOperation.queuePriority = queuePriority;
         downloadOperation.downloadFilePath = filePath;
-        downloadOperation.tmpFilePath = [NSString stringWithFormat:@"%@/%@", directory, URL.absoluteString.md5String];
+        downloadOperation.tmpFilePath = [NSString stringWithFormat:@"%@/%@", directory, [MKDownloadUitls MD5WithString:URL.absoluteString]];
         downloadOperation.progressHandler = progressHandler;
         downloadOperation.completionHandler = completionHandler;
         [downloadOperation dataTaskWithURL:URL];
@@ -116,10 +116,7 @@
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     MKWebFileDownloadOperation *downloadOperation = [self operationWithTask:task];
     if (downloadOperation) {
-        [MKDownloadUitls performOnMainThread:^{
-            [downloadOperation URLSession:session task:task didCompleteWithError:error];
-        } available:_delegateOnMainThread];
-        
+        [downloadOperation URLSession:session task:task didCompleteWithError:error];
     } else {
         // 无效操作
     }
@@ -129,9 +126,7 @@
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     MKWebFileDownloadOperation *downloadOperation = [self operationWithTask:dataTask];
     if (downloadOperation) {
-        [MKDownloadUitls performOnMainThread:^{
-            [downloadOperation URLSession:session dataTask:dataTask didReceiveData:data];
-        } available:_delegateOnMainThread];
+        [downloadOperation URLSession:session dataTask:dataTask didReceiveData:data];
     } else {
         // 无效操作
     }
@@ -140,9 +135,7 @@
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
     MKWebFileDownloadOperation *downloadOperation = [self operationWithTask:dataTask];
     if (downloadOperation) {
-        [MKDownloadUitls performOnMainThread:^{
-            [downloadOperation URLSession:session dataTask:dataTask didReceiveResponse:response completionHandler:completionHandler];
-        } available:_delegateOnMainThread];
+        [downloadOperation URLSession:session dataTask:dataTask didReceiveResponse:response completionHandler:completionHandler];
     } else {
         // 无效操作
     }

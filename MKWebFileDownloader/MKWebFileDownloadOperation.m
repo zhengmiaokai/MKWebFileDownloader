@@ -6,7 +6,7 @@
 //
 
 #import "MKWebFileDownloadOperation.h"
-#import "NSFileManager+FileDownload.h"
+#import "MKDownloadUitls.h"
 
 @interface MKWebFileDownloadOperation ()
 
@@ -84,9 +84,7 @@
 #pragma mark - NSURLSessionDelegate -
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     if (error) {
-        if (_completionHandler) {
-            _completionHandler(_downloadFilePath, nil, error);
-        }
+        [self handleCompletion:nil fileData:nil error:error];
     } else {
         if (_supportResume) {
             [self.writeHandle closeFile];
@@ -121,16 +119,20 @@
                 netError = [NSError errorWithDomain:_downloadURL.absoluteString code:response.statusCode userInfo:@{@"message": @"download fail"}];
             }
             
-            if (_completionHandler) {
-                _completionHandler(nil, nil, netError);
-            }
+            [self handleCompletion:nil fileData:nil error:netError];
         } else {
-            if (_completionHandler) {
-                _completionHandler(_downloadFilePath, [_downloadData copy], nil);
-            }
+            [self handleCompletion:_downloadFilePath fileData:[_downloadData copy] error:nil];
         }
     }
     [self done];
+}
+
+- (void)handleCompletion:(NSString *)filePath fileData:(NSData *)fileData error:(NSError *)error {
+    if (_completionHandler) {
+        [MKDownloadUitls performOnMainThread:^{
+            self.completionHandler(filePath, fileData, error);
+        } available:_delegateOnMainThread];
+    }
 }
 
 #pragma mark - NSURLSessionDataTaskDelegate -
@@ -144,7 +146,9 @@
     }
     
     if (_progressHandler) {
-        _progressHandler(_totalBytesWritten, _totalBytesExpectedToWrite);
+        [MKDownloadUitls performOnMainThread:^{
+            self.progressHandler(self.totalBytesWritten, self.totalBytesExpectedToWrite);
+        } available:_delegateOnMainThread];
     }
 }
 
