@@ -88,8 +88,8 @@
  *  filePath 文件路劲
  */
 + (BOOL)removefile:(NSString*)filePath {
-    NSError* error;
-    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+    NSError* error = nil;
+    [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
     
     if (error == nil) {
         return YES;
