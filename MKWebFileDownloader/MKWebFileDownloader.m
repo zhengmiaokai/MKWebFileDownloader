@@ -87,7 +87,7 @@
     
     NSURL* URL = [NSURL URLWithString:URLString];
     NSString *fileName = [NSString stringWithFormat:@"%@.%@", [MKDownloadUitls MD5WithString:URL.absoluteString], URL.pathExtension];
-    NSString *filePath = [NSString stringWithFormat:@"%@/%@", directory, fileName];
+    NSString *filePath = [directory stringByAppendingPathComponent:fileName];
     
     if ([NSFileManager isExistsAtPath:filePath]) {
         // 文件已下载
@@ -102,7 +102,7 @@
         downloadOperation.delegateOnMainThread = _delegateOnMainThread;
         downloadOperation.queuePriority = queuePriority;
         downloadOperation.downloadFilePath = filePath;
-        downloadOperation.tmpFilePath = [NSString stringWithFormat:@"%@/%@", directory, [MKDownloadUitls MD5WithString:URL.absoluteString]];
+        downloadOperation.tmpFilePath = [directory stringByAppendingPathComponent:[MKDownloadUitls MD5WithString:URL.absoluteString]];
         downloadOperation.progressHandler = progressHandler;
         downloadOperation.completionHandler = completionHandler;
         [downloadOperation dataTaskWithURL:URL];

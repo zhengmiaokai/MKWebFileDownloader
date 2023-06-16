@@ -86,6 +86,9 @@
     if (error) {
         [self handleCompletion:nil fileData:nil error:error];
     } else {
+        self.totalBytesWritten = 0;
+        self.totalBytesExpectedToWrite = 0;
+
         if (_supportResume) {
             [self.writeHandle closeFile];
             self.writeHandle = nil;
@@ -96,12 +99,15 @@
                 [[NSFileManager defaultManager] removeItemAtPath:_downloadFilePath error:&fileError];
             }
             [[NSFileManager defaultManager] moveItemAtURL:[NSURL fileURLWithPath:_tmpFilePath] toURL:[NSURL fileURLWithPath:_downloadFilePath] error:&fileError];
+            
+            if (fileError) { // 文件操作失败时，回调异常信息，结束Operation
+                [self handleCompletion:nil fileData:nil error:fileError];
+                [self done];
+                return;
+            }
         } else {
             [_downloadData writeToFile:_downloadFilePath atomically:YES];
         }
-        
-        self.totalBytesWritten = 0;
-        self.totalBytesExpectedToWrite = 0;
         
         NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
         NSError *netError = nil;
