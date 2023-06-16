@@ -80,9 +80,7 @@
  *  filePath 文件路劲
  */
 + (BOOL)isExistsAtPath:(NSString*)filePath {
-    
     BOOL isExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
-    
     return isExists;
 }
 
@@ -92,13 +90,12 @@
 + (BOOL)removefile:(NSString*)filePath {
     NSError* error;
     BOOL success = [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+    
     if (error == nil) {
         return YES;
-    }
-    else{
+    } else {
         return NO;
     }
-    return success;
 }
 
 @end
