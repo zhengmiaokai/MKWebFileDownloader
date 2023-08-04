@@ -86,9 +86,6 @@
     if (error) {
         [self handleCompletion:nil fileData:nil error:error];
     } else {
-        self.totalBytesWritten = 0;
-        self.totalBytesExpectedToWrite = 0;
-
         if (_supportResume) {
             [self.writeHandle closeFile];
             self.writeHandle = nil;
@@ -110,24 +107,18 @@
         }
         
         NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
-        NSError *netError = nil;
-        if (response.statusCode/200 != 1) {
+        
+        if ((response.statusCode >= 200 && response.statusCode <= 299) && (_downloadData.length == _totalBytesExpectedToWrite)) {
+            [self handleCompletion:_downloadFilePath fileData:[_downloadData copy] error:nil];
+        } else {
             // 删除本地缓存
             if ([[NSFileManager defaultManager] fileExistsAtPath:_downloadFilePath]) {
                 NSError *fileError = nil;
                 [[NSFileManager defaultManager] removeItemAtPath:_downloadFilePath error:&fileError];
             }
             
-            if (_downloadData.length) {
-                NSString* desc = [[NSString alloc] initWithData:_downloadData encoding:NSUTF8StringEncoding];
-                netError = [NSError errorWithDomain:_downloadURL.absoluteString code:response.statusCode userInfo:@{@"message": desc}];
-            } else {
-                netError = [NSError errorWithDomain:_downloadURL.absoluteString code:response.statusCode userInfo:@{@"message": @"download fail"}];
-            }
-            
+            NSError *netError = nil;netError = [NSError errorWithDomain:_downloadURL.absoluteString code:response.statusCode userInfo:@{@"message": @"download fail"}];
             [self handleCompletion:nil fileData:nil error:netError];
-        } else {
-            [self handleCompletion:_downloadFilePath fileData:[_downloadData copy] error:nil];
         }
     }
     [self done];
@@ -139,6 +130,9 @@
             self.completionHandler(filePath, fileData, error);
         } available:_delegateOnMainThread];
     }
+    
+    self.totalBytesWritten = 0;
+    self.totalBytesExpectedToWrite = 0;
 }
 
 #pragma mark - NSURLSessionDataTaskDelegate -
