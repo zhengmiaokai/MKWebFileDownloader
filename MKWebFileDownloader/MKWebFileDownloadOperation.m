@@ -117,7 +117,7 @@
                 [[NSFileManager defaultManager] removeItemAtPath:_downloadFilePath error:&fileError];
             }
             
-            NSError *netError = nil;netError = [NSError errorWithDomain:_downloadURL.absoluteString code:response.statusCode userInfo:@{@"message": @"download fail"}];
+            NSError *netError = [NSError errorWithDomain:_downloadURL.absoluteString code:response.statusCode userInfo:@{@"message": @"download fail"}];
             [self handleCompletion:nil fileData:nil error:netError];
         }
     }
