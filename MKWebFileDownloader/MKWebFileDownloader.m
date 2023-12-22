@@ -36,7 +36,7 @@
     if (self) {
         self.downloadQueue = [[NSOperationQueue alloc]init];
         _downloadQueue.maxConcurrentOperationCount = 6;
-        _downloadQueue.name = @"com.Base.MKWebFileDownloader";
+        _downloadQueue.name = @"com.webFileDownloader.downloadQueue";
         
         self.downloadSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
         
@@ -89,12 +89,15 @@
     NSString *fileName = [NSString stringWithFormat:@"%@.%@", [MKDownloadUitls MD5WithString:URL.absoluteString], URL.pathExtension];
     NSString *filePath = [directory stringByAppendingPathComponent:fileName];
     
-    if ([NSFileManager isExistsAtPath:filePath]) {
-        // 文件已下载
-        NSData *fileData = [[NSData alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filePath]];
-        if (completionHandler) {
-            completionHandler(filePath, fileData, nil);
-        }
+    if ([NSFileManager isExistsAtPath:filePath]) { // 文件已下载
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *fileData = [[NSData alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filePath]];
+            [MKDownloadUitls performOnMainThread:^{
+                if (completionHandler) {
+                    completionHandler(filePath, fileData, nil);
+                }
+            } available:self.delegateOnMainThread];
+        });
         return nil;
     } else {
         MKWebFileDownloadOperation *downloadOperation = [[MKWebFileDownloadOperation alloc] initWithDownloadSession:_downloadSession];
