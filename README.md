@@ -2,8 +2,11 @@
 
 基于NSOperationQueue与NSURLSessionDataTask实现的文件下载器（支持设置队列并发数量、任务优先级、断点续传）
 
-```Objective-c
+```objective-c
 - (void)download {
+    [MKWebFileDownloader sharedInstance].delegateOnMainThread = YES;
+    [MKWebFileDownloader sharedInstance].maxConcurrentOperationCount = 6;
+
     NSString *URLString = @"https://dldir1.qq.com/qqfile/QQforMac/QQ_V6.5.0.dmg";
     [[MKWebFileDownloader sharedInstance] downloadWithURLString:URLString supportResume:YES directory:nil queuePriority:NSOperationQueuePriorityNormal progressHandler:^(NSInteger receivedSize, NSInteger expectedSize) {
         NSString *statusInfo = [NSString stringWithFormat:@"下载进度：%d%@", (int)(1.0*receivedSize/expectedSize * 100), @"%"];
