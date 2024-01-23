@@ -8,9 +8,29 @@
 #import "MKWebFileDownloadOperation.h"
 #import "MKDownloadUitls.h"
 
+#define WFLOCK(...) dispatch_semaphore_wait(self.lock, DISPATCH_TIME_FOREVER); \
+__VA_ARGS__; \
+dispatch_semaphore_signal(self.lock);
+
+@interface MKWebFileDownLoadHandler : NSObject
+
+@property (nonatomic, copy) MKWebFileDownloadProgressHandler progressHandler;
+
+@property (nonatomic, copy) MKWebFileDownloadCompletionHandler completionHandler;
+
+@end
+
+@implementation MKWebFileDownLoadHandler
+
+@end
+
+
 @interface MKWebFileDownloadOperation ()
 
 @property (nonatomic, strong) NSURLSession *downloadSession;
+
+@property (nonatomic, strong) NSMutableArray *downloadHandlers;
+@property (nonatomic, strong) dispatch_semaphore_t lock;
 
 @property (nonatomic, copy) NSURL *downloadURL;
 
@@ -30,12 +50,21 @@
     self = [super init];
     if (self) {
         self.downloadSession = downloadSession;
+        self.downloadHandlers = [NSMutableArray arrayWithCapacity:1];
+        self.lock = dispatch_semaphore_create(1);
     }
     return self;
 }
 
 - (void)dealloc {
     // 释放下载任务
+}
+
+- (void)addProgressHandler:(MKWebFileDownloadProgressHandler)progressHandler completionHandler:(MKWebFileDownloadCompletionHandler)completionHandler {
+    MKWebFileDownLoadHandler* downloadHandler = [[MKWebFileDownLoadHandler alloc] init];
+    downloadHandler.progressHandler = progressHandler;
+    downloadHandler.completionHandler = completionHandler;
+    WFLOCK([_downloadHandlers addObject:downloadHandler]);
 }
 
 - (NSURLSessionDataTask *)dataTaskWithURL:(NSURL *)URL {
@@ -79,6 +108,10 @@
 - (void)done {
     self.finished = YES;
     self.executing = NO;
+    
+    if (_completionHandler) {
+        _completionHandler();
+    }
 }
 
 #pragma mark - NSURLSessionDelegate -
@@ -125,11 +158,14 @@
 }
 
 - (void)handleCompletion:(NSString *)filePath fileData:(NSData *)fileData error:(NSError *)error {
-    if (_completionHandler) {
-        [MKDownloadUitls performOnMainThread:^{
-            self.completionHandler(filePath, fileData, error);
-        } available:_delegateOnMainThread];
-    }
+    [MKDownloadUitls performOnMainThread:^{
+        WFLOCK(NSArray* downloadHandlers = [self.downloadHandlers copy]);
+        for (MKWebFileDownLoadHandler *downLoadHandler in downloadHandlers) {
+            if (downLoadHandler.completionHandler) {
+                downLoadHandler.completionHandler(filePath, fileData, error);
+            }
+        }
+    } available:_delegateOnMainThread];
     
     self.totalBytesWritten = 0;
     self.totalBytesExpectedToWrite = 0;
@@ -145,11 +181,14 @@
         [self.writeHandle writeData:data];
     }
     
-    if (_progressHandler) {
-        [MKDownloadUitls performOnMainThread:^{
-            self.progressHandler(self.totalBytesWritten, self.totalBytesExpectedToWrite);
-        } available:_delegateOnMainThread];
-    }
+    [MKDownloadUitls performOnMainThread:^{
+        WFLOCK(NSArray* downloadHandlers = [self.downloadHandlers copy]);
+        for (MKWebFileDownLoadHandler *downLoadHandler in downloadHandlers) {
+            if (downLoadHandler.progressHandler) {
+                downLoadHandler.progressHandler(self.totalBytesWritten, self.totalBytesExpectedToWrite);
+            }
+        }
+    } available:_delegateOnMainThread];
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {

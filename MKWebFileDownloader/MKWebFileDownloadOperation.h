@@ -7,6 +7,9 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^MKWebFileDownloadProgressHandler)(NSInteger receivedSize, NSInteger expectedSize);
+typedef void(^MKWebFileDownloadCompletionHandler)(NSString *filePath, NSData *fileData, NSError *error);
+
 @interface MKWebFileDownloadOperation : NSOperation <NSURLSessionDataDelegate>
 
 @property (nonatomic, strong, readonly) NSURLSessionDataTask *dataTask;
@@ -21,10 +24,11 @@
 /// 是否在主线程回调（default: NO）
 @property (nonatomic, assign) BOOL delegateOnMainThread;
 
-@property (nonatomic, copy) void(^progressHandler)(NSInteger receivedSize, NSInteger expectedSize);
-@property (nonatomic, copy) void(^completionHandler)(NSString *filePath, NSData *fileData, NSError *error);
+@property (nonatomic, copy) void(^completionHandler)(void);
 
 - (instancetype)initWithDownloadSession:(NSURLSession *)downloadSession;
+
+- (void)addProgressHandler:(MKWebFileDownloadProgressHandler)progressHandler completionHandler:(MKWebFileDownloadCompletionHandler)completionHandler;
 
 - (NSURLSessionDataTask *)dataTaskWithURL:(NSURL *)URL;
 

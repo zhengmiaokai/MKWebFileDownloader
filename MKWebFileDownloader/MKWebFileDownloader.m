@@ -9,6 +9,10 @@
 #import "MKDownloadUitls.h"
 #import "MKWebFileDownloadOperation.h"
 
+#define WFLOCK(...) dispatch_semaphore_wait(self.lock, DISPATCH_TIME_FOREVER); \
+__VA_ARGS__; \
+dispatch_semaphore_signal(self.lock);
+
 @interface MKWebFileDownloader () <NSURLSessionDataDelegate> {
     NSString *_defaultDirectory;
 }
@@ -17,6 +21,9 @@
 @property (nonatomic, strong) NSOperationQueue *downloadQueue;
 
 @property (nonatomic, strong) NSURLSession *downloadSession;
+
+@property (nonatomic, strong) NSMutableDictionary *downloadOperations;
+@property (nonatomic, strong) dispatch_semaphore_t lock;
 
 @end
 
@@ -39,6 +46,9 @@
         _downloadQueue.name = @"com.webFileDownloader.downloadQueue";
         
         self.downloadSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
+        
+        self.downloadOperations = [NSMutableDictionary dictionary];
+        self.lock = dispatch_semaphore_create(1);
         
         NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         _defaultDirectory = [cachesPath stringByAppendingPathComponent:NSStringFromClass([self class])];
@@ -79,38 +89,52 @@
     directory = (directory ? directory:_defaultDirectory);
     if (![NSFileManager creatFolderWithPath:directory]) {
         if (completionHandler) {
-            NSError *fileError = [NSError errorWithDomain:URLString code:-1 userInfo:@{@"message": @"存储路劲异常"}];
-            completionHandler(nil, nil, fileError);
+            [MKDownloadUitls performOnMainThread:^{
+                NSError *fileError = [NSError errorWithDomain:URLString code:-1 userInfo:@{@"message": @"存储路劲异常"}];
+                completionHandler(nil, nil, fileError);
+            } available:self.delegateOnMainThread];
         }
         return nil;
     }
     
+    NSString *fileKey = [MKDownloadUitls MD5WithString:URLString];
     NSURL* URL = [NSURL URLWithString:URLString];
-    NSString *fileName = [NSString stringWithFormat:@"%@.%@", [MKDownloadUitls MD5WithString:URL.absoluteString], URL.pathExtension];
+    NSString *fileName = [NSString stringWithFormat:@"%@.%@", fileKey, URL.pathExtension];
     NSString *filePath = [directory stringByAppendingPathComponent:fileName];
     
     if ([NSFileManager isExistsAtPath:filePath]) { // 文件已下载
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSData *fileData = [[NSData alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filePath]];
-            [MKDownloadUitls performOnMainThread:^{
-                if (completionHandler) {
+            if (completionHandler) {
+                [MKDownloadUitls performOnMainThread:^{
                     completionHandler(filePath, fileData, nil);
-                }
-            } available:self.delegateOnMainThread];
+                } available:self.delegateOnMainThread];
+            }
         });
         return nil;
     } else {
-        MKWebFileDownloadOperation *downloadOperation = [[MKWebFileDownloadOperation alloc] initWithDownloadSession:_downloadSession];
-        downloadOperation.supportResume = supportResume;
-        downloadOperation.delegateOnMainThread = _delegateOnMainThread;
-        downloadOperation.queuePriority = queuePriority;
-        downloadOperation.downloadFilePath = filePath;
-        downloadOperation.tmpFilePath = [directory stringByAppendingPathComponent:[MKDownloadUitls MD5WithString:URL.absoluteString]];
-        downloadOperation.progressHandler = progressHandler;
-        downloadOperation.completionHandler = completionHandler;
-        [downloadOperation dataTaskWithURL:URL];
-        [self.downloadQueue addOperation:downloadOperation];
-        
+        WFLOCK(MKWebFileDownloadOperation *downloadOperation = [self.downloadOperations objectForKey:fileKey]);
+        if (downloadOperation) {
+            [downloadOperation addProgressHandler:progressHandler completionHandler:completionHandler];
+        } else {
+            downloadOperation = [[MKWebFileDownloadOperation alloc] initWithDownloadSession:self.downloadSession];
+            downloadOperation.supportResume = supportResume;
+            downloadOperation.delegateOnMainThread = _delegateOnMainThread;
+            downloadOperation.queuePriority = queuePriority;
+            downloadOperation.downloadFilePath = filePath;
+            downloadOperation.tmpFilePath = [directory stringByAppendingPathComponent:fileKey];
+            [downloadOperation addProgressHandler:progressHandler completionHandler:completionHandler];
+            [downloadOperation dataTaskWithURL:URL];
+            
+            __weak typeof(self) weakSelf = self;
+            [downloadOperation setCompletionHandler:^{
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                WFLOCK([strongSelf.downloadOperations removeObjectForKey:fileKey]);
+            }];
+            WFLOCK([self.downloadOperations setObject:downloadOperation forKey:fileKey]);
+            
+            [self.downloadQueue addOperation:downloadOperation];
+        }
         return downloadOperation.dataTask;
     }
 }
