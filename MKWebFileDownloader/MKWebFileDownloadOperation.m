@@ -141,7 +141,7 @@ dispatch_semaphore_signal(self.lock);
         
         NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
         
-        if ((response.statusCode >= 200 && response.statusCode <= 299) && (_downloadData.length == _totalBytesExpectedToWrite)) {
+        if ((response.statusCode >= 200 && response.statusCode <= 299) && (_totalBytesExpectedToWrite == NSURLResponseUnknownLength || _downloadData.length == _totalBytesExpectedToWrite)) {
             [self handleCompletion:_downloadFilePath fileData:[_downloadData copy] error:nil];
         } else {
             // 删除本地缓存
